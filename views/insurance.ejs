@@ -1,0 +1,352 @@
+<head>
+  <link rel="stylesheet" href="./css/main.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    function linkRender(e) {
+      window.open(e, "_blank");
+    }
+    // $(document).ready(function () {
+    $(document).ready(function () {
+      $("#form3").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+          type: "GET",
+          url: "/get_total_claims",
+          success: function (response) {
+            console.log("success data", response.data);
+
+            renderAccommodation(response.data);
+          },
+          error: function () {
+            console.error("Error fetching accommodation data");
+          },
+        });
+
+        function renderAccommodation(data) {
+          var container = $("#insurance-container");
+          const value = document.getElementById("InsuranceType").value;
+          container.empty();
+
+          console.log("rendering data", value);
+          data
+            .filter((el) =>
+              el.InsuranceType.toLowerCase().includes(value.toLowerCase())
+            )
+            .forEach(function (claim) {
+              console.log(claim);
+              container.append(`
+                              <div class="job-avail">
+                                  <label for="" class="fw-semibold">Insurance Type: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${claim.InsuranceType}
+                                  </div>
+                                  <label for="" class="fw-semibold"
+                                    >Coverage Details: </label
+                                  >
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${claim.CoverageDetails}
+                                  </div>
+                                  <label for="" class="fw-semibold"
+                                    >Benefits: </label
+                                  >
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${claim.Benefits}
+                                  </div>
+                                  <label for="" class="fw-semibold">Services: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${claim.Services}
+                                  </div>
+                              </div>
+                  `);
+            });
+        }
+      });
+    });
+  </script>
+</head>
+<%- include('header.ejs'); -%>
+<body style="margin-bottom: 2rem;">
+  <%- include('nav.ejs'); -%>
+
+  <div class="container">
+    <section class="pt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="mb-5">Availability Checking</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <form action="" id="form3" method="post">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="" class="fw-semibold form-label"
+                      >Insurance Type</label
+                    >
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <select
+                      class="form-select w-100"
+                      id="InsuranceType"
+                      aria-label="Floating label select example"
+                    >
+                      <option value="" selected>Open this select menu</option>
+                      <option value="Hospitalization Insurance">
+                        Hospitalization Insurance
+                      </option>
+                      <option value="Emergency Visit Insurance">
+                        Emergency Visit Insurance
+                      </option>
+                      <option value="Dental Care Insurance">
+                        Dental Care Insurance
+                      </option>
+                      <option value="Vision Care Insurance">
+                        Vision Care Insurance
+                      </option>
+                      <option value="Maternity Insurance">
+                        Maternity Insurance
+                      </option>
+                      <option value="Dependent Insurance">
+                        Dependent Insurance
+                      </option>
+                      <option value="Accident Insurance">
+                        Accident Insurance
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-8 mb-3">
+                    <button type="submit" class="btn btn-success">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="pt-5">
+      <div class="row">
+        <div>
+          <p>Output</p>
+          <p style="font-size: 1rem">Policy claim details Bencfits</p>
+          <div
+            class=""
+            style="
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+              margin: auto;
+              flex-wrap: wrap;
+            "
+            id="insurance-container"
+          ></div>
+        </div>
+        <!-- <div class="col-md-6">
+          <h5 class="mb-5">Claim submission details</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <form action="" id="form4" method="post">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="" class="fw-semibold form-label">Service</label>
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <select
+                      class="form-select w-100"
+                      id="nvm"
+                      aria-label="Floating label select example"
+                    >
+                      <option value="" selected>Open this select menu</option>
+                      <option value="Hospitalization Insurance">
+                        Hospitalization Insurance
+                      </option>
+                      <option value="Emergency Visit Insurance">
+                        Emergency Visit Insurance
+                      </option>
+                      <option value="Dental Care Insurance">
+                        Dental Care Insurance
+                      </option>
+                      <option value="Vision Care Insurance">
+                        Vision Care Insurance
+                      </option>
+                      <option value="Maternity Insurance">
+                        Maternity Insurance
+                      </option>
+                      <option value="Dependent Insurance">
+                        Dependent Insurance
+                      </option>
+                      <option value="Accident Insurance">
+                        Accident Insurance
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-8 mb-3">
+                    <button type="button" class="btn btn-success">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+    <!-- <div>
+      <p>Output</p>
+      <p style="font-size: 1rem">Policy claim details Bencfits</p>
+    </div>
+    <div>
+      <p>Claim submission details</p>
+      <div class="col-md">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+            <option value="1">Kitchener</option>
+            <option value="2">Waterloo</option>
+            <option value="3">Toronto</option>
+          </select>
+          <label for="floatingSelect">Services</label>
+          <div class="invalid-feedback">Invalid selection</div>
+        </div>
+        <div class="col-12">
+          <button
+            class="btn"
+            style="
+              background-color: #a1d187;
+              display: flex;
+              margin: 2rem auto;
+              padding: 0 2rem;
+            "
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p>Output</p>
+      <p class="insure-row">Claim Submission Procedures</p>
+      <p class="insure-row">Required docs checklist</p>
+    </div> -->
+    <div style="display: flex; width: 80%; margin: auto; align-items: center">
+      <p style="font-size: 1rem;">Student form - </p>
+      <p style="font-size: 1rem; cursor: pointer;" onclick="linkRender(`https://studentcare.ca/rte/en/IHaveAPlan_WUSA_DownloadCentre_ClaimForms`)"> https://studentcare.ca/rte/en/IHaveAPlan_WUSA_DownloadCentre_ClaimForms</p>
+    </div>
+    <div style="display: flex; width: 80%; margin: auto; align-items: center">
+      <p style="font-size: 1rem;">Dependent form - </p>
+      <p style="font-size: 1rem; cursor: pointer;" onclick="linkRender(`https://studentcare.ca/rte/en/IHaveAPlan_WUSA_DownloadCentre_ClaimForms`)"> https://studentcare.ca/rte/en/IHaveAPlan_WUSA_DownloadCentre_ClaimForms</p>
+    </div>
+  </div>
+  <!-- <p style="font-size: 1.5rem">Availability Checking</p>
+  <form class="was-validated avail-form">
+    <div class="col-md">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">Hospitalization Insurance</option>
+          <option value="2">Emergency Visit Insurance</option>
+          <option value="3">Dental Care Insurance</option>
+          <option value="1">Vision Care Insurance</option>
+          <option value="2">Maternity Insurance</option>
+          <option value="3">Dependent Insurance</option>
+          <option value="3">Accident Insurance</option>
+        </select>
+        <label for="floatingSelect">Insurance Type</label>
+        <div class="invalid-feedback">Invalid selection</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <button
+        class="btn"
+        style="
+          background-color: #a1d187;
+          display: flex;
+          margin: 2rem auto;
+          padding: 0 2rem;
+        "
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form> -->
+  <!-- <div>
+    <p>Output</p>
+    <p style="font-size: 1rem">Policy claim details Bencfits</p>
+  </div>
+  <div>
+    <p>Claim submission details</p>
+    <div class="col-md">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">Kitchener</option>
+          <option value="2">Waterloo</option>
+          <option value="3">Toronto</option>
+        </select>
+        <label for="floatingSelect">Services</label>
+        <div class="invalid-feedback">Invalid selection</div>
+      </div>
+      <div class="col-12">
+        <button
+          class="btn"
+          style="
+            background-color: #a1d187;
+            display: flex;
+            margin: 2rem auto;
+            padding: 0 2rem;
+          "
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>Output</p>
+    <p class="insure-row">Claim Submission Procedures</p>
+    <p class="insure-row">Required docs checklist</p>
+  </div>
+  <div style="display: flex; width: 80%; margin: auto; align-items: center">
+    <p>Student form -</p>
+    <div>URL</div>
+  </div>
+  <div style="display: flex; width: 80%; margin: auto; align-items: center">
+    <p>Dependent form -</p>
+    <div>URL</div>
+  </div> -->
+</body>
+<%- include('footer.ejs'); -%>

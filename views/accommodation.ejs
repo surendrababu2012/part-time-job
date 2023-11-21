@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="text/javascript">
+      // $(document).ready(function () {
+      $(document).ready(function () {
+        $("#form2").submit(function (e) {
+          e.preventDefault();
+          $.ajax({
+            type: "GET",
+            url: "/get_total_accommodation",
+            success: function (response) {
+              console.log("success data");
+
+              renderAccommodation(response.data);
+            },
+            error: function () {
+              console.error("Error fetching accommodation data");
+            },
+          });
+
+          function renderAccommodation(data) {
+            var container = $("#accommodation-container");
+            const value = document.getElementById("location").value;
+            const value2 = document.getElementById("pricing").value.split("-");
+            container.empty();
+            console.log(value2)
+
+            console.log("rendering data", value2[0], value2[1]);
+            const cond = (el) => {
+              if (value === "" && value2 === "") {
+                return;
+              } else if (value === "") {
+                return el.Price > value2[0] && el.Price < value2[1];
+              } else if (value2[0] === "") {
+                return el.location.toLowerCase().includes(value.toLowerCase());
+              } else {
+                return el.location.toLowerCase().includes(value.toLowerCase()) && el.Price > value2[0] && el.Price < value2[1]
+              }
+            };
+            data
+              .filter(
+                (el) => cond(el)
+                //  && el.Price > parseInt(value2[0]) && el.Price < parseInt(value2[1])
+              )
+              .forEach(function (house) {
+                console.log(house);
+                container.append(`
+                        <div style="border:1px solid rgba(0,0,0.1); width: 23%; margin: 2% 1%;">
+                            <p style=' font-size: 1.5rem;'><img src='${
+                              house.Image
+                            }' style='width: 100%; aspect-ratio: 16/9;'> </p>
+                            <p style=' font-size: 1.5rem; padding: 0 1rem;'>Price: ${parseInt(
+                              house.Price
+                            ).toLocaleString("en-IN", {
+                              style: "currency",
+                              currency: "USD",
+                            })}</p>
+                            <p style=' font-size: 1.5rem; padding: 0 1rem;'>Contact: ${
+                              house.Contact
+                            }</p>
+                            <p style=' font-size: 1.5rem; padding: 0 1rem;'>Email: ${
+                              house.Email
+                            }</p>
+                            <p style=' font-size: 1.5rem; padding: 0 1rem;'>Location: ${
+                              house.location
+                            }</p>
+                        </div>
+                    `);
+              });
+          }
+        });
+      });
+    </script>
+  </head>
+  <%- include('header.ejs'); -%>
+  <body style="margin-bottom: 2rem">
+    <%- include('nav.ejs'); -%>
+    <div class="container">
+      <section class="pt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="mb-5">Availability Checking</h5>
+            <div class="row">
+              <div class="col-md-12">
+                <form id="form2" method="post">
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label for="" class="fw-semibold form-label"
+                        >Location</label
+                      >
+                    </div>
+                    <div class="col-md-8 mb-3">
+                      <select
+                        name="location"
+                        id="location"
+                        class="form-select w-100"
+                      >
+                        <option value="" selected>Open this select menu</option>
+                        <option value="Vancouver">Vancouver</option>
+                        <option value="Montreal">Montreal</option>
+                        <option value="Edmonton">Edmonton</option>
+                        <option value="Waterloo">Waterloo</option>
+                        <option value="Toronto">Toronto</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="" class="fw-semibold form-label"
+                        >Housing type</label
+                      >
+                    </div>
+                    <div class="col-md-8 mb-3">
+                      <select
+                        name="housing-type"
+                        id=""
+                        class="form-select w-100"
+                      >
+                        <option selected>Open this select menu</option>
+                        <option value="Condo">Condo</option>
+                        <option value="Duplex">Duplex</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="" class="fw-semibold form-label"
+                        >Pricing</label
+                      >
+                    </div>
+                    <div class="col-md-8 mb-3">
+                      <select
+                        name="pricing"
+                        id="pricing"
+                        class="form-select w-100"
+                      >
+                        <option value="" selected>Open this select menu</option>
+                        <option value="0-500">$ 0-500</option>
+                        <option value="501-1000">$ 501-1000</option>
+                        <option value="1001-1500">$ 1001-1500</option>
+                        <option value="1500-3000">$ 1500-3000</option>
+                        <option value="3000-5000">$ 3000-5000</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8 mb-3">
+                      <button type="submit" class="btn btn-success">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- <form class="was-validated avail-form" id="form2">
+      <div class="col-md">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+            <option value="Kitchener">Kitchener</option>
+            <option value="Vancouver">Vancouver</option>
+            <option value="Montreal">Montreal</option>
+            <option value="Edmonton">Edmonton</option>
+            <option value="Kitchener">Kitchener</option>
+            <option value="Kitchener">Kitchener</option>
+            <option value="Waterloo">Waterloo</option>
+            <option value="Toronto">Toronto</option>
+          </select>
+          <label for="floatingSelect">Location</label>
+          <div class="invalid-feedback">Invalid selection</div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+            <option value="Condo">Condo</option>
+            <option value="Duplex">Duplex</option>
+          </select>
+          <label for="floatingSelect">Housing type</label>
+          <div class="invalid-feedback">Invalid selection</div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+            <option value="1">Communication</option>
+            <option value="2">Problem solving and decision making</option>
+            <option value="3">College or univesity education preferred</option>
+          </select>
+          <label for="floatingSelect">Price Range</label>
+          <div class="invalid-feedback">Invalid selection</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button
+          class="btn"
+          style="
+            background-color: #a1d187;
+            display: flex;
+            margin: 2rem auto;
+            padding: 0 2rem;
+          "
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form> -->
+    <div
+      class=""
+      style="display: flex; width: 100vw; flex-wrap: wrap"
+      id="accommodation-container"
+    ></div>
+  </body>
+  <%- include('footer.ejs'); -%>
+</html>

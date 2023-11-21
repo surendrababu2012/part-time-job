@@ -1,0 +1,163 @@
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  position: relative;
+}
+
+header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+header h1 {
+  text-align: center;
+  font-size: 30px;
+  color: red;
+}
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.avail-form {
+  width: 60%;
+  margin: auto;
+}
+
+.availability-box {
+  background-color: white;
+  width: 60%;
+  margin: 2rem auto;
+  border: 1px solid black;
+  padding: 2rem;
+}
+
+.avail-row {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem auto;
+}
+
+.avail-label {
+  font-weight: bold;
+  width: 20%;
+}
+
+.avail-input {
+  width: 70%;
+}
+
+.step-box {
+  width: 80%;
+  margin: auto;
+}
+
+.step-row {
+  font-weight: bold;
+  border: 1px solid black;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+}
+
+.insure-row {
+  width: 50%;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid black;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+}
+.step-head {
+    margin-top: 1rem;
+}
+.step-head h5 {
+    margin-left: 1rem;
+  font-size: 1.1rem;
+}
+.step-head h6 {
+    margin-left: 1.5rem;
+  font-size: 0.9rem;
+}
+/* .job-avail {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+} */
+.job-avail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 30%;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+.job-avail label {
+  width: 30%;
+  display: flex;
+}
+
+.job-avail div {
+  width: 70%;
+  display: flex;
+}
+
+.job-cont {
+  display: flex;
+  justify-content: space-between;
+}
+.btm-cnt h5 {
+  cursor: pointer;
+}
+.step-class-hid {
+  display: none;
+}
+.step-class-block {
+  display: block;
+}
+
+
+/* Apply some basic styling to the table */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Style the table header */
+.header-cell {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style the table rows */
+.data-row {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Add some hover effect to the table rows */
+.data-row:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style the cells */
+.username-cell,
+.email-cell {
+  padding: 10px;
+}
+
+
+
+

@@ -1,0 +1,525 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+    integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script type="text/javascript">
+    function linkRender(e) {
+      window.open(e, "_blank");
+    }
+    $(document).ready(function () {
+      $("#form-job").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+          type: "GET",
+          url: "/get_total_jobs",
+          success: function (response) {
+            console.log("success data", response);
+
+            renderAccommodation(response.data);
+          },
+          error: function () {
+            console.error("Error fetching accommodation data");
+          },
+        });
+
+        function renderAccommodation(data) {
+          var container = $("#job-container");
+          const skills = document.getElementById("skills").value;
+          const location = document.getElementById("location").value;
+          container.empty();
+
+          console.log("rendering data", skills);
+          data
+            .filter((el) => {
+              // console.log(el)
+              return el?.Location?.toLowerCase()?.includes(
+                location?.toLowerCase()
+                // el?.Requirements?.toLowerCase()?.includes(
+                //   skills?.toLowerCase())
+                // ||
+              );
+            })
+            .forEach(function (house) {
+              console.log(house);
+              container.append(`
+                              <div class="job-avail">
+                                  <label for="" class="fw-semibold">Job Title: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.Title}
+                                  </div>
+                                  <label for="" class="fw-semibold"
+                                    >Company Name: </label
+                                  >
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.CompanyName}
+                                  </div>
+                                  <label for="" class="fw-semibold">Description: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.Description}
+                                  </div>
+                                  <label for="" class="fw-semibold"
+                                    >Pay: </label
+                                  >
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.Pay}
+                                  </div>
+                                  <label for="" class="fw-semibold">Requirements: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.Requirements}
+                                  </div>
+                                  <label for="" class="fw-semibold">Location: </label>
+                                  <div
+                                    type="text"
+                                    name="job-title"
+                                    id=""
+                                    class="">
+                                    ${house.Location}
+                                  </div>
+                              </div>
+                  `);
+            });
+        }
+      });
+    });
+  </script>
+</head>
+<%- include('header.ejs'); -%>
+<body style="margin-bottom: 2rem;">
+  <%- include('nav.ejs'); -%>
+  <div class="container">
+    <section>
+      <div class="row">
+        <div class="col-md-12 pt-3">
+          <h3>Job in our website</h3>
+        </div>
+      </div>
+    </section>
+    <section class="pt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="mb-5">Availability Checking</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <form action="" id="form-job" method="get">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="" class="fw-semibold form-label"
+                      >Location</label
+                    >
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <select
+                      name="location"
+                      id="location"
+                      class="form-select w-100"
+                    >
+                      <option value="" selected>Open this select menu</option>
+                      <option value="Kitchener">Kitchener</option>
+                      <option value="Vancouver">Vancouver</option>
+                      <option value="Montreal">Montreal</option>
+                      <option value="Edmonton">Edmonton</option>
+                      <option value="Kitchener">Kitchener</option>
+                      <option value="Waterloo">Waterloo</option>
+                      <option value="Toronto">Toronto</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="" class="fw-semibold form-label"
+                      >Job Type</label
+                    >
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <select
+                      name="location"
+                      id="location"
+                      class="form-select w-100"
+                    >
+                      <option value="" selected>Open this select menu</option>
+                      <option value="Basic math skills">
+                        Basic math skills
+                      </option>
+                      <option value="Attention to detail">
+                        Attention to detail
+                      </option>
+                      <option value="Excellent communication skills">
+                        Excellent communication skills
+                      </option>
+                      <option value="physical fitness">physical fitness</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="" class="fw-semibold form-label">Skills</label>
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <select name="skills" id="skills" class="form-select w-100">
+                      <option value="" selected>Open this select menu</option>
+                      <option value="Basic math skills">
+                        Basic math skills
+                      </option>
+                      <option value="Attention to detail">
+                        Attention to detail
+                      </option>
+                      <option value="Excellent communication skills">
+                        Excellent communication skills
+                      </option>
+                      <option value="physical fitness">physical fitness</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-8 mb-3">
+                    <button type="submit" class="btn btn-success">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="pt-5">
+      <div class="row">
+        <div
+          class=""
+          style="
+            display: flex;
+            justify-content: space-between;
+            width: 100vw;
+            flex-wrap: wrap;
+          "
+          id="job-container"
+        ></div>
+      </div>
+    </section>
+    <section class="pt-5">
+      <div class="row btm-cnt">
+        <div class="col-md-12">
+       
+          <div class="mb-4 p-2 bg-light">
+            <h5 onclick="showRender('step-block')">
+              Steps: How to build a Resume ( Comprehensive details )
+            </h5>
+            <div class="step-head step-class-hid" id="step-block">
+              <h5>Personal Information:</h5>
+              <h6>
+                Start with your full name, phone number, professional email
+                address, and LinkedIn profile link (if applicable). Ensure your
+                contact information is easily accessible.
+              </h6>
+              <h5>Objective Statement:</h5>
+              <h6>
+                Craft a concise objective statement that highlights your career
+                goals and how you plan to contribute to a part-time role. Tailor
+                it to the specific job you're applying for.
+              </h6>
+              <h5>Education:</h5>
+              <h6>
+                Highlight your academic achievements, including your current
+                program, university, anticipated graduation date, and GPA (if
+                it's strong). Showcase any relevant academic honors.
+              </h6>
+              <h5>Relevant Coursework</h5>
+              <h6>
+                Create a section showcasing coursework directly related to the
+                part-time job. Highlighting specific courses demonstrates your
+                academic expertise in key areas.
+              </h6>
+              <h5>Skills:</h5>
+              <h6>
+                Outline both technical and soft skills relevant to the part-time
+                job. Include proficiency levels for technical skills and
+                specific examples of how you've applied soft skills.
+              </h6>
+              <h5>Work Experience:</h5>
+              <h6>
+                Detail previous work experiences, emphasizing responsibilities
+                and achievements. Use action verbs to describe your
+                accomplishments and focus on transferable skills applicable to
+                the part-time role.
+              </h6>
+              <h5>Volunteer Experience</h5>
+              <h6>
+                Include volunteer work that showcases your commitment,
+                leadership, and community engagement. Highlight specific
+                contributions and skills developed through volunteer
+                experiences.
+              </h6>
+              <h5>Extracurricular Activities:</h5>
+              <h6>
+                Mention involvement in clubs, organizations, or extracurricular
+                activities. Emphasize leadership roles, major projects, or
+                events you've been a part of that demonstrate your abilities.
+              </h6>
+              <h5>Languages:</h5>
+              <h6>
+                If applicable, highlight any additional languages you speak and
+                your proficiency level. Specify if you can communicate
+                effectively in professional settings.
+              </h6>
+              <h5>References:</h5>
+              <h6>
+                Include professional references or state that they are available
+                upon request. Ensure you have permission from your references
+                before listing them. Provide their names, positions, and contact
+                information.
+              </h6>
+            </div>
+          </div>
+          <div class="mb-4 p-2 bg-light">
+            <h5 onclick="showRender('tip-block')">Tips and sample Questions</h5>
+            <div class="step-head step-class-hid" id="tip-block">
+              <h5>Tailor Your Resume:</h5>
+              <h6>
+                Customize your resume for each job application to highlight
+                skills and experiences most relevant to the specific position.
+              </h6>
+              <h5>Quantify Achievements:</h5>
+              <h6>
+                Whenever possible, quantify your achievements with numbers or
+                percentages to provide concrete evidence of your impact.
+              </h6>
+              <h5>Use Action Verbs:</h5>
+              <h6>
+                Utilize strong action verbs to describe your responsibilities
+                and achievements. This adds dynamism to your resume.
+              </h6>
+              <h5>Highlight Transferable Skills:</h5>
+              <h6>
+                Emphasize transferable skills gained from various experiences,
+                demonstrating your adaptability to different work environments.
+              </h6>
+              <h5>Showcase Professional Development:</h5>
+              <h6>
+                Include any relevant certifications, workshops, or online
+                courses that showcase your commitment to ongoing professional
+                development.
+              </h6>
+              <h5>Keep it Concise:</h5>
+              <h6>
+                Aim for a concise and well-organized resume. Ideally, it should
+                be one page for students or recent graduates, and no more than
+                two pages for those with more experience.
+              </h6>
+              <h5>Proofread:</h5>
+              <h6>
+                Thoroughly proofread your resume to ensure there are no typos or
+                grammatical errors. A polished document reflects your attention
+                to detail. Showcasing Skills and Abilities Create a dedicated
+                skills section, including technical skills and soft skills.
+                Highlight any relevant certifications, such as a Food Handler
+                Certification, demonstrating your commitment to safety and
+                compliance in roles involving food service. Use keywords from
+                job descriptions to optimize your resume for applicant tracking
+                systems.
+              </h6>
+            </div>
+            <div class="step-head step-class-hid">
+              <h5>
+                Question: Can you share an experience where you demonstrated
+                strong teamwork in a past role?
+              </h5>
+              <h6>
+                Answer: Certainly. In my previous part-time job at a retail
+                store, we collaborated to set up a new product display. I
+                contributed ideas, worked with team members to organize
+                merchandise, and ensured the display was visually appealing.
+              </h6>
+
+              <h5>
+                Question: How do you handle challenging or unexpected situations
+                at work?
+              </h5>
+              <h6>
+                Answer: I approach challenges with a positive mindset. In a busy
+                restaurant shift, when a colleague called in sick, I stepped up
+                to cover their responsibilities. I stayed focused, communicated
+                with the team, and ensured smooth operations.
+              </h6>
+
+              <h5>
+                Question: Describe a time when you had to balance multiple
+                priorities and tasks.
+              </h5>
+              <h6>
+                Answer: During exam periods, I balanced part-time work with
+                academic commitments. I created a schedule, prioritized
+                assignments, and communicated my availability to my employer.
+                This allowed me to maintain high academic performance while
+                fulfilling work responsibilities.
+              </h6>
+
+              <h5>
+                Question: How do you handle customer complaints or difficult
+                interactions?
+              </h5>
+              <h6>
+                Answer: I actively listen to understand the customer's concern,
+                empathize with their experience, and offer a solution within
+                company policies. In a retail setting, for instance, I addressed
+                a customer's dissatisfaction by providing an exchange, ensuring
+                a positive resolution.
+              </h6>
+
+              <h5>
+                Question: Can you share an example of a time when you had to
+                quickly learn a new process or system?
+              </h5>
+              <h6>
+                Answer: In a call center role, we adopted a new CRM system. I
+                attended training sessions, practiced using the system, and
+                sought guidance from colleagues. This proactive approach allowed
+                me to adapt swiftly and efficiently.
+              </h6>
+
+              <h5>
+                Question: Describe a situation where you demonstrated strong
+                communication skills.
+              </h5>
+              <h6>
+                Answer: In a sales role, I effectively communicated product
+                features to customers, resulting in increased sales. I tailored
+                my communication style based on customer preferences, ensuring
+                clarity and understanding.
+              </h6>
+
+              <h5>
+                Question: How do you stay organized when handling various
+                responsibilities in a fast-paced environment?
+              </h5>
+              <h6>
+                Answer: I utilize a digital task management tool to create to-do
+                lists and set reminders. This helps me organize tasks,
+                prioritize effectively, and stay on top of deadlines, whether
+                it's managing inventory in a store or completing assignments.
+              </h6>
+
+              <h5>
+                Question: Tell me about a time when you went above and beyond to
+                deliver excellent customer service.
+              </h5>
+              <h6>
+                Answer: In a restaurant, a customer had specific dietary
+                restrictions. I collaborated with the kitchen to customize a
+                dish, ensuring it met the customer's needs. The extra effort
+                resulted in positive feedback and repeat business.
+              </h6>
+
+              <h5>
+                Question: How do you handle situations where you need to follow
+                a set of rules or protocols?
+              </h5>
+              <h6>
+                Answer: I adhere to established rules and protocols to ensure
+                consistency and compliance. In a previous role at a call center,
+                I followed script guidelines to provide accurate information and
+                maintain a professional standard.
+              </h6>
+
+              <h5>
+                Question: Describe a situation where you had to resolve a
+                conflict within a team or with a customer.
+              </h5>
+              <h6>
+                Answer: In a retail setting, I encountered a disagreement
+                between team members. I facilitated a discussion, identified
+                common ground, and suggested a compromise. This approach
+                resolved the conflict, fostering a positive team environment.
+              </h6>
+
+              <h5>
+                Question: How do you approach learning new skills or improving
+                existing ones?
+              </h5>
+              <h6>
+                Answer: I proactively seek learning opportunities, whether
+                through online courses or on-the-job training. For instance, in
+                a factory setting, I attended workshops to enhance my
+                understanding of machine operations, demonstrating a commitment
+                to continuous improvement.
+              </h6>
+
+              <h5>
+                Question: Can you share an experience where you demonstrated
+                adaptability to changes in the workplace?
+              </h5>
+              <h6>
+                Answer: In a store, we underwent a change in inventory
+                management software. I quickly adapted by attending training
+                sessions, practicing with the new system, and assisting
+                colleagues. This adaptability ensured a smooth transition and
+                minimized disruptions.
+              </h6>
+            </div>
+          </div>
+          <div class="mb-4 p-2 bg-light">
+            <h5 onclick="showRender('vid-block')">
+              Recorded Video Lectures for References
+            </h5>
+            <div class="step-head step-class-hid" id="vid-block">
+             
+
+              <a href="https://www.youtube.com/watch?v=fr-mwiyhZAo&ab_channel=CareerVidz" target="_blank">TOP 21 QUICK ANSWERS TO JOB INTERVIEW QUESTIONS!
+
+              </a><br>
+              
+         
+              <a href="https://www.youtube.com/watch?v=fr-mwiyhZAo&ab_channel=CareerVidz" target="_blank">5 PART-TIME JOB INTERVIEW QUESTIONS AND ANSWERS! (How to PASS a
+                Part-Time Job Interview!)</a><br>
+                
+           
+            
+              <a href="https://www.indeed.com/career-advice/finding-a-job/best-jobs-for-teen" target="_blank">15 Best Jobs for Teenagers to Consider for the Future</a>
+                <br>
+             
+              <a href="https://www.youtube.com/watch?v=3x2Da3EjpPU&ab_channel=SAHAINCANADA" target="_blank"> HOW TO MAKE YOUR FIRST PART TIME JOB RESUME IN CANADA|
+                International Students</a><br>
+
+         
+
+              <a href="https://www.youtube.com/watch?v=Q23CKM5n4D8&ab_channel=JassKaurBrar" target="_blank">How To Clear Job Interview At Walmart | Jobs In Canada |
+                International Students | Canada | Jobs 2023</a>
+
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </section>
+  </div>
+  <script>
+    function showRender(e) {
+      console.log(e);
+      // $(`#${e}`).removeClass('step-class-hid');
+      $(`#${e}`).toggleClass('step-class-block')
+    }
+  </script>
+</body>
+<%- include('footer.ejs'); -%>

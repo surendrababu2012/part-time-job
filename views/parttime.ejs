@@ -1,0 +1,98 @@
+<head>
+  <link rel="stylesheet" href="./css/main.css" />
+</head>
+<%- include('header.ejs'); -%>
+<body>
+  <%- include('nav.ejs'); -%>
+
+  <h1 style="padding: 0 1rem">Jobs in Our Website</h1>
+  <p style="font-size: 1.5rem;">Availability Checking</p>
+  <form class="was-validated avail-form">
+    <div class="col-md">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">Kitchener</option>
+          <option value="2">Waterloo</option>
+          <option value="3">Toronto</option>
+        </select>
+        <label for="floatingSelect">Location</label>
+        <div class="invalid-feedback">Invalid selection</div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">Part-Time</option>
+          <option value="2">Full-Time</option>
+        </select>
+        <label for="floatingSelect">Job type</label>
+        <div class="invalid-feedback">Invalid selection</div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">Communication</option>
+          <option value="2">Problem solving and decision making</option>
+          <option value="3">College or univesity education preferred</option>
+        </select>
+        <label for="floatingSelect">Skills</label>
+        <div class="invalid-feedback">Invalid selection</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="btn" style="background-color: #a1d187; display: flex; margin: 2rem auto; padding: 0 2rem;" type="submit">Submit</button>
+    </div>
+  </form>
+  <div class="availability-box">
+    <p style="font-weight: bold; margin-bottom: 2rem">Avaialility-1</p>
+    <div class="avail-row">
+      <div class="avail-label">Job title</div>
+      <input class="avail-input" />
+    </div>
+    <div class="avail-row">
+      <div class="avail-label">Company Name</div>
+      <input class="avail-input" />
+    </div>
+    <div class="avail-row">
+      <div class="avail-label">Location</div>
+      <input class="avail-input" />
+    </div>
+    <div class="avail-row">
+      <div class="avail-label">Job Description</div>
+      <input class="avail-input" />
+    </div>
+    <div class="avail-row">
+      <div class="avail-label">Pay Range</div>
+      <input class="avail-input" />
+    </div>
+    <div class="avail-row">
+      <div class="avail-label">Requirements</div>
+      <input class="avail-input" />
+    </div>
+  </div>
+  <div class="step-box">
+    <p style="font-weight: bold;">
+      List of records depending upon the filters and fetching from database.
+    </p>
+    <p class="step-row">Steps: How to build a Resume (comprehensive details)</p>
+    <p class="step-row">Tips and sample Questions</p>
+    <p class="step-row">Recorded Video Lectures for References</p>
+  </div>
+</body>
+<%- include('footer.ejs'); -%>

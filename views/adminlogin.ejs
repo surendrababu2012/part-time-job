@@ -1,0 +1,46 @@
+<%- include('header.ejs'); -%>
+
+<body style="margin-bottom: 5rem">
+<%- include('nav1.ejs'); -%>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Admin Login</h2>
+
+          <form name="myform" method="post" action="adminlogin">
+            <div class="mb-3">
+             
+              <input id="username" class="form-control" placeholder="Username" type="text" name="username" autofocus required>
+            </div>
+
+            <div class="mb-3">
+             
+              <input id="password" class="form-control" placeholder="Password" type="password" name="password" required>
+            </div>
+
+            <div class="mb-3">
+              <input type="submit" value="Login" class="btn btn-primary w-100">
+            </div>
+
+            <div id="errors" class="text-center">
+              <div id="error" class="alert alert-danger" role="alert">
+                <% if(typeof(error) != 'undefined') { %>
+                  <%= error %>
+                <% } %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+<%- include('footer.ejs'); -%>
