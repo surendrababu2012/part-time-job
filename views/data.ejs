@@ -1,0 +1,32 @@
+<%- include('header.ejs'); -%>
+
+<body style="margin-bottom: 5rem">
+  <%- include('nav1.ejs'); -%>
+	<div class="col-md-4 col-md-offset-4">
+		<div>
+			<h4>Profile Detail</h4>
+		</div>
+		<table class="user-table">
+			<thead>
+			  <tr>
+				<th class="header-cell">Name</th>
+				<th class="header-cell">Email</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <% data.forEach((x) => { %>
+				<tr class="data-row">
+				  <td class="username-cell"><%= x.username %></td>
+				  <td class="email-cell"><%= x.email %></td>
+				</tr>
+			  <% }) %>
+			</tbody>
+		  </table>
+		  
+
+	</div>
+
+
+</body>
+<%- include('footer.ejs'); -%>
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registration</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css" />
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#form1").submit(function (event) {
+          event.preventDefault();
+
+          $.ajax({
+            type: "POST",
+            url: "/reg",
+            data: $("#form1").serialize(),
+            dataType: "json",
+            success: function (response) {
+              //alert("a");
+              //console.log(response.Success);
+              $("#form1")[0].reset();
+
+              document.getElementById("check").innerHTML = response.Success;
+              //ADD THIS CODE
+              setTimeout(function () {
+                document.getElementById("check").innerHTML = "";
+              }, 3000);
+              if (response.Success == "You are regestered,You can login now.") {
+                document.getElementById("aa").click();
+              }
+            },
+            error: function () {},
+          });
+        });
+      });
+    </script>
+    <%- include('header.ejs'); -%>
+  </head>
+
+  <body>
+    <div class="col-md-4 col-md-offset-4">
+      <div>
+        <p class="text-center">Register Now</p>
+      </div>
+      <div class="form-group">
+        <form id="form1" method="post" >
+          <label class="form-label">Username</label><br />
+          <input
+            type="text"
+            name="username"
+            required=""
+            class="form-control"
+          /><br />
+          <label class="form-label">Phone Number</label><br />
+          <input
+            type="number"
+            name="pnumber"
+            required=""
+            class="form-control"
+          /><br />
+          <label class="form-label">Date of Birth</label><br />
+          <input type="date" name="DOB" class="form-control" /><br />
+          <label class="form-label">Address</label><br />
+          <input
+            type="text"
+            name="address"
+            required=""
+            class="form-control"
+          /><br />
+          <label class="form-label">Email</label><br />
+          <input
+            type="email"
+            name="email"
+            placeholder="user@example.com"
+            required=""
+            class="form-control"
+          /><br />
+          <label class="form-label">Password</label><br />
+          <input
+            type="password"
+            name="password"
+            placeholder="xxxxxxxxxxxx"
+            required=""
+            class="form-control"
+          /><br />
+          <label class="form-label">Confirm Password</label><br />
+          <input
+            type="password"
+            name="passwordConf"
+            placeholder="xxxxxxxxxxxx"
+            required=""
+            class="form-control"
+          /><br />
+          <input type="submit" value="Register" class="btn btn-success" />
+        </form>
+      </div>
+
+      <div class="mssg bg-danger">
+        <span id="check"></span>
+      </div>
+      <div>
+        <span>Already Registered! <a href="/login">Login</a></span>
+      </div>
+      <div id="LangTable"><a href="/login" id="aa"></a></div>
+    </div>
+  </body>
+  <%- include('footer.ejs'); -%>
+</html>

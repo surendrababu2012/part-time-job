@@ -1,0 +1,85 @@
+
+<%- include('header.ejs'); -%>
+<body style="margin-bottom: 5rem">
+  <%- include('nav.ejs'); -%>
+
+<!-- User and General posted questions -->
+<div class="container mt-5">
+    <div class="row">
+      <!-- User posted questions -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">User posted questions</h3>
+          </div>
+          <div class="card-body">
+            <div class="list-group">
+              <% data.forEach((x)=> { %>
+                <div class="list-group-item">
+                  <h5 class="mb-1">Question:</h5>
+                  <p class="mb-1"><%= x.quest %></p>
+                  <h6 class="mb-1">Answer:</h6>
+                  <p class="mb-1"><%= x.ans %></p>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- General posted questions -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">General posted questions</h3>
+          </div>
+          <div class="card-body">
+            <div class="list-group">
+              <!-- Add your data for general questions here -->
+              <div class="list-group-item">
+                <h5 class="mb-1">Question:</h5>
+                <p class="mb-1">This is a general question.</p>
+                <h6 class="mb-1">Answer:</h6>
+                <p class="mb-1">This is the answer to the general question.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Post a Question -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">Post a Question</h3>
+          </div>
+          <div class="card-body">
+            <form action="/faq" method="post">
+              <div class="form-group">
+                <label for="question">Your Question:</label>
+                <textarea class="form-control" id="question" name="question" rows="4"></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Submit Question</button>
+            </form>
+          </div>
+        </div>
+  
+        <!-- Error message -->
+        <div class="mt-3">
+          <p id="errors" class="text-success">
+            <div class="alert alert-success">
+              <% if(typeof(error) != 'undefined') { %>
+                <%= error %>
+              <% } %>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</body>
+<%- include('footer.ejs'); -%>
